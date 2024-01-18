@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  display: grid;
+  grid-template-rows: 125px 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas:
+    'header header header '
+    'leftsidepanel gameDiv rightsidepanel';
+  height: 100vh;
+}
+.game-header {
+  background-color: pink;
+  grid-area: header;
+  text-align: center;
+}
+#left-side-panel {
+  background-color: red;
+  grid-area: leftsidepanel;
+}
+#right-side-panel {
+  background-color: orange;
+  grid-area: rightsidepanel;
+}
+#game-div {
+  background-color: violet;
+  grid-area: gameDiv;
+}
