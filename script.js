@@ -80,21 +80,26 @@ const movePlayerLeft = () => {
     basicArray[player.boardLocation[0]][player.boardLocation[1]] = 2
   }
 }
-console.log(player.boardLocation)
-movePlayerUp()
-movePlayerRight()
-movePlayerRight()
-movePlayerDown()
+// key down syntax taken from: https://www.tutorialspoint.com/detecting-arrow-key-presses-in-javascript
+document.addEventListener('keydown', function (e) {
+  if (e.key == 'ArrowUp') {
+    movePlayerUp()
+  } else if (e.key == 'ArrowDown') {
+    movePlayerDown()
+  } else if (e.key == 'ArrowRight') {
+    movePlayerRight()
+  } else if (e.key == 'ArrowLeft') {
+    movePlayerLeft()
+  }
+})
 
-movePlayerRight()
-movePlayerDown()
-movePlayerRight()
+// console.log(player.boardLocation)
+// movePlayerUp()
+// movePlayerRight()
+// movePlayerRight()
+// movePlayerDown()
+// movePlayerRight()
+// movePlayerDown()
+// movePlayerRight()
 console.log(player.boardLocation)
 console.log(basicArray)
-
-// movePlayerLeft()
-// console.log(player.boardLocation)
-
-// console.log(player.boardLocation)
-// movePlayerRight()
-// console.log(player.boardLocation)
