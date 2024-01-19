@@ -2,10 +2,10 @@ body {
   margin: 0;
   display: grid;
   grid-template-rows: 125px 1fr;
-  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-columns: 2fr 405px 2fr;
   grid-template-areas:
     'header header header '
-    'leftsidepanel gameDiv rightsidepanel';
+    'leftsidepanel gameContainerDiv rightsidepanel';
   height: 100vh;
 }
 .game-header {
@@ -21,7 +21,31 @@ body {
   background-color: orange;
   grid-area: rightsidepanel;
 }
-#game-div {
+#game-container-div {
   background-color: violet;
-  grid-area: gameDiv;
+  grid-area: gameContainerDiv;
+}
+#game-board-div {
+  display: grid;
+  grid-gap: 0px;
+  grid-template-rows: repeat(27, 1fr);
+  grid-template-columns: repeat(27, 1fr);
+}
+.board-element {
+  /* border: 1px solid navy; */
+  width: 15px;
+  height: 15px;
+  margin: 0;
+}
+.board-wall-light {
+  background-color: black;
+}
+.board-floor-light {
+  background-color: white;
+}
+.board-player {
+  background-color: aqua;
+}
+.board-exit-light {
+  background-color: red;
 }
