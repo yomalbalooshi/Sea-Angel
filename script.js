@@ -5,6 +5,7 @@
 // 4 signifies trap
 // 5 signifies points
 let gameBoard = document.querySelector('#game-board-div')
+let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
 let basicArray = [
   [
@@ -16,23 +17,23 @@ let basicArray = [
     0, 1
   ],
   [
-    1, 0, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
+    1, 0, 1, 0, 0, 0, 0, 0, 5, 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
     0, 1
   ],
   [
-    1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0,
+    1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 5, 1, 0, 0, 0, 0, 1, 1, 1, 0,
     0, 1
   ],
   [
-    1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 0, 0, 1, 0, 0, 1, 5, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
     0, 1
   ],
   [
-    1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 5, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
     0, 1
   ],
   [
-    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0,
     0, 1
   ],
   [
@@ -40,7 +41,7 @@ let basicArray = [
     0, 1
   ],
   [
-    1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
     0, 1
   ],
   [
@@ -96,7 +97,7 @@ let basicArray = [
     0, 1
   ],
   [
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0,
+    1, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0,
     0, 1
   ],
   [
@@ -118,18 +119,18 @@ let basicArray = [
 ]
 
 const game = {
-  level: 0,
-  time: 0,
+  level: 1,
   mode: 'daydream',
   boardArray: basicArray,
   playerStartPosition: [1, 1],
-  trapPower: 1
+  trapPower: 1,
+  totalScore: 5
 }
 const player = {
   //boardLocation syntax: [up/down, left/right]
-  boardLocation: [1, 1],
-  score: 0,
-  lives: 3
+  boardLocation: [],
+  lives: 3,
+  score: 0
 }
 
 const movePlayerUp = () => {
@@ -183,13 +184,13 @@ const movePlayerLeft = () => {
 
 // key down listener syntax taken from: https://www.tutorialspoint.com/detecting-arrow-key-presses-in-javascript
 document.addEventListener('keydown', function (e) {
-  if (e.key == 'ArrowUp') {
+  if (e.code == 'KeyW') {
     movePlayerUp()
-  } else if (e.key == 'ArrowDown') {
+  } else if (e.code == 'KeyS') {
     movePlayerDown()
-  } else if (e.key == 'ArrowRight') {
+  } else if (e.code == 'KeyD') {
     movePlayerRight()
-  } else if (e.key == 'ArrowLeft') {
+  } else if (e.code == 'KeyA') {
     movePlayerLeft()
   }
 })
@@ -208,16 +209,21 @@ const displayBoard = () => {
         boardElement.classList.add('board-wall-light')
       } else if (game.boardArray[i][j] === 3) {
         boardElement.classList.add('board-exit-light')
+      } else if (game.boardArray[i][j] === 4) {
+        boardElement.classList.add('board-trap-light')
+      } else if (game.boardArray[i][j] === 5) {
+        boardElement.classList.add('board-score-light')
       }
       gameBoard.appendChild(boardElement)
     }
   }
 }
 const startGame = () => {
+  player.boardLocation = game.playerStartPosition
+  gameLevel.innerText = game.level
+  hearts.innerText = player.lives
   displayBoard()
 }
-
-startGame()
 const checkIfExit = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 3) {
     alert('game end')
@@ -226,14 +232,24 @@ const checkIfExit = () => {
 const checkIfTrap = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 4) {
     player.lives -= game.trapPower
+    hearts.innerText = ''
+    hearts.innerText = player.lives
     if (player.lives === 0) {
       alert('death')
     }
     alert('trap')
   }
 }
+const checkIfScore = () => {
+  if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 5) {
+    player.score++
+    console.log(player.score)
+  }
+}
 const checkLocation = () => {
   checkIfExit()
   checkIfTrap()
-  // checkIfExit()
+  checkIfScore()
 }
+
+startGame()
