@@ -227,5 +227,5 @@ let levelTwoLight = [
   ]
 ]
 
-let daydream = [levelOneLight]
+let daydream = [levelOneLight, levelTwoLight]
 export { daydream }

@@ -6,9 +6,9 @@
 // 4 signifies trap
 // 5 signifies points
 // 6 signifies keys
-let gameMode = document.querySelector('#nightmareMode')
+let gameMode = document.querySelector('#daydreamMode')
 gameMode.addEventListener('click', () => {
-  window.location.href = './nightmare.html'
+  window.location.href = './index.html'
 })
 let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
@@ -247,5 +247,6 @@ const checkLocation = () => {
   checkIfScore()
   checkIfKey()
 }
+
 document.querySelector('#game-container-div').innerHTML = ''
 startLevel(game.gameBoards[0])
