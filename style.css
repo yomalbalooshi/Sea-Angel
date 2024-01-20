@@ -14,7 +14,7 @@ body {
   text-align: center;
 }
 #left-side-panel {
-  background-color: red;
+  background-color: lightsalmon;
   grid-area: leftsidepanel;
 }
 #right-side-panel {
@@ -22,7 +22,7 @@ body {
   grid-area: rightsidepanel;
 }
 #game-container-div {
-  background-color: violet;
+  background-color: #a3f7c9;
   grid-area: gameContainerDiv;
 }
 #game-board-div {
@@ -38,20 +38,28 @@ body {
   margin: 0;
 }
 .board-wall-light {
-  background-color: black;
+  background-color: #34a44f;
+  outline: 1px dashed #226932;
+  outline-offset: -1px;
+  border-radius: 20%;
 }
 .board-floor-light {
-  background-color: white;
+  background-color: #a3f7c9;
+  outline: 1px dashed #f7eca3;
+  outline-offset: -1px;
 }
 .board-player {
-  background-color: aqua;
+  background-color: #ff5733;
 }
 .board-exit-light {
-  background-color: red;
+  background-color: #525953;
 }
 .board-trap-light {
-  background-color: orange;
+  background-color: #78634f;
 }
 .board-score-light {
-  background-color: limegreen;
+  background-color: #fff000;
+}
+.board-key-light {
+  background-color: #ab1d8a;
 }

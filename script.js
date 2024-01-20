@@ -1,10 +1,12 @@
+// maze is generated using numbers to minimize memory usage
 // 0 signifies path
 // 1 signifies wall
 // 2 signifies player
 // 3 signifies exit
 // 4 signifies trap
 // 5 signifies points
-let gameBoard = document.querySelector('#game-board-div')
+// 6 signifies keys
+
 let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
 let basicArray = [
@@ -18,7 +20,7 @@ let basicArray = [
   ],
   [
     1, 0, 1, 0, 0, 0, 0, 0, 5, 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
-    0, 1
+    6, 1
   ],
   [
     1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 5, 1, 0, 0, 0, 0, 1, 1, 1, 0,
@@ -105,7 +107,7 @@ let basicArray = [
     0, 1
   ],
   [
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4, 0, 0, 1, 0, 6, 0, 0, 1, 0,
     0, 1
   ],
   [
@@ -121,16 +123,18 @@ let basicArray = [
 const game = {
   level: 1,
   mode: 'daydream',
-  boardArray: basicArray,
+  boardArray: structuredClone(basicArray),
   playerStartPosition: [1, 1],
   trapPower: 1,
-  totalScore: 5
+  totalScore: 5,
+  totalKeys: 2
 }
 const player = {
   //boardLocation syntax: [up/down, left/right]
   boardLocation: [],
   lives: 3,
-  score: 0
+  score: 0,
+  keys: 0
 }
 
 const movePlayerUp = () => {
@@ -196,6 +200,7 @@ document.addEventListener('keydown', function (e) {
 })
 
 const displayBoard = () => {
+  let gameBoard = document.querySelector('#game-board-div')
   gameBoard.innerHTML = ''
   for (let i = 0; i < game.boardArray.length; i++) {
     for (let j = 0; j < game.boardArray[i].length; j++) {
@@ -213,43 +218,72 @@ const displayBoard = () => {
         boardElement.classList.add('board-trap-light')
       } else if (game.boardArray[i][j] === 5) {
         boardElement.classList.add('board-score-light')
+      } else if (game.boardArray[i][j] === 6) {
+        boardElement.classList.add('board-key-light')
       }
       gameBoard.appendChild(boardElement)
     }
   }
 }
+
 const startGame = () => {
-  player.boardLocation = game.playerStartPosition
+  document.querySelector('#game-container-div').innerHTML = ''
+  game.boardArray = structuredClone(basicArray)
+  player.boardLocation = structuredClone(game.playerStartPosition)
   gameLevel.innerText = game.level
+  player.lives = 3
   hearts.innerText = player.lives
+  let displayGameBoard = document.createElement('div')
+  displayGameBoard.setAttribute('id', 'game-board-div')
+  document.querySelector('#game-container-div').appendChild(displayGameBoard)
   displayBoard()
 }
-const checkIfExit = () => {
-  if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 3) {
-    alert('game end')
+const endGame = (gameStatus) => {
+  if (gameStatus === 'death') {
+    startGame()
+  } else if (gameStatus === 'exit') {
+    if (player.keys < game.totalKeys) {
+      alert('missing some stuff')
+    } else alert('collected all keys')
   }
 }
+
+const checkIfExit = () => {
+  if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 3) {
+    endGame('exit')
+  }
+}
+
 const checkIfTrap = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 4) {
     player.lives -= game.trapPower
     hearts.innerText = ''
     hearts.innerText = player.lives
     if (player.lives === 0) {
-      alert('death')
+      endGame('death')
     }
-    alert('trap')
+    // alert('trap')
   }
 }
+
 const checkIfScore = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 5) {
     player.score++
-    console.log(player.score)
+    document.querySelector('#currentPoints').innerText = player.score
   }
 }
+const checkIfKey = () => {
+  if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 6) {
+    player.keys++
+    document.querySelector('#currentKeys').innerText = player.keys
+  }
+}
+
 const checkLocation = () => {
   checkIfExit()
   checkIfTrap()
   checkIfScore()
+  checkIfKey()
 }
-
+document.querySelector('#game-container-div').innerHTML = ''
 startGame()
