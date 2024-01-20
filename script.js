@@ -11,8 +11,6 @@ let hearts = document.querySelector('#currentLivesLeft')
 let playerScore = document.querySelector('#currentPoints')
 let playerKeys = document.querySelector('#currentKeys')
 import { daydream } from './dataStore.js'
-console.log(daydream[0])
-
 const game = {
   level: 1,
   mode: 'daydream',
@@ -39,8 +37,12 @@ const movePlayerUp = () => {
     game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
     player.boardLocation[0] = player.boardLocation[0] - 1
     checkLocation()
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-    displayBoard()
+    if (checkIfExit() == true) {
+      endGame('exit')
+    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+      displayBoard()
+    }
   }
 }
 const movePlayerDown = () => {
@@ -51,8 +53,12 @@ const movePlayerDown = () => {
     game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
     player.boardLocation[0] = player.boardLocation[0] + 1
     checkLocation()
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-    displayBoard()
+    if (checkIfExit() == true) {
+      endGame('exit')
+    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+      displayBoard()
+    }
   }
 }
 const movePlayerRight = () => {
@@ -63,8 +69,12 @@ const movePlayerRight = () => {
     game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
     player.boardLocation[1] = player.boardLocation[1] + 1
     checkLocation()
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-    displayBoard()
+    if (checkIfExit() == true) {
+      endGame('exit')
+    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+      displayBoard()
+    }
   }
 }
 const movePlayerLeft = () => {
@@ -75,8 +85,12 @@ const movePlayerLeft = () => {
     game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
     player.boardLocation[1] = player.boardLocation[1] - 1
     checkLocation()
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-    displayBoard()
+    if (checkIfExit() == true) {
+      endGame('exit')
+    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+      displayBoard()
+    }
   }
 }
 
@@ -161,8 +175,23 @@ const displayNextLevelMenu = (currentLevel) => {
     game.level++
     startLevel(game.gameBoards[game.level - 1])
   })
-
-  // startLevel(game.gameBoards[game.level - 1])
+}
+const displayEndGameMenu = () => {
+  document.querySelector('#game-container-div').innerHTML = ''
+  let endGameMenu = document.createElement('div')
+  endGameMenu.setAttribute('id', 'end-game-div')
+  let endGameMenuHeader = document.createElement('h3')
+  endGameMenuHeader.setAttribute('id', 'end-game-header')
+  endGameMenuHeader.innerText = 'You escaped!'
+  let restartLevelButton = document.createElement('button')
+  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.innerText = 'Restart Level'
+  restartLevelButton.addEventListener('click', () => {
+    startLevel(game.gameBoards[game.level - 1])
+  })
+  endGameMenu.appendChild(endGameMenuHeader)
+  endGameMenu.appendChild(restartLevelButton)
+  document.querySelector('#game-container-div').appendChild(endGameMenu)
 }
 
 const endGame = (gameStatus) => {
@@ -171,16 +200,20 @@ const endGame = (gameStatus) => {
   } else if (gameStatus === 'exit') {
     if (player.keys < game.totalKeys) {
       alert('missing some stuff')
-    } else displayNextLevelMenu(game.level)
+    } else {
+      if (game.level === game.gameBoards.length) {
+        displayEndGameMenu()
+      } else {
+        displayNextLevelMenu(game.level)
+      }
+    }
   }
 }
-
 const checkIfExit = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 3) {
-    endGame('exit')
+    return true
   }
 }
-
 const checkIfTrap = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 4) {
     player.lives -= game.trapPower
@@ -206,7 +239,6 @@ const checkIfKey = () => {
 }
 
 const checkLocation = () => {
-  checkIfExit()
   checkIfTrap()
   checkIfScore()
   checkIfKey()
