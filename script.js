@@ -9,6 +9,8 @@
 
 let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
+let playerScore = document.querySelector('#currentPoints')
+let playerKeys = document.querySelector('#currentKeys')
 let basicArray = [
   [
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -119,11 +121,122 @@ let basicArray = [
     3, 1
   ]
 ]
+let secondArray = [
+  [
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1
+  ],
+  [
+    1, 2, 1, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 1, 0, 0, 0, 0, 0, 5, 4, 0, 0, 5, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
+    6, 1
+  ],
+  [
+    1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 5, 1, 0, 0, 0, 0, 1, 1, 1, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 1, 0, 0, 1, 5, 0, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 5, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1,
+    1, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1,
+    1, 1
+  ],
+  [
+    1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1
+  ],
+  [
+    1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0,
+    0, 1
+  ],
+  [
+    1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 0, 0, 1, 0, 6, 0, 0, 1, 0,
+    0, 1
+  ],
+  [
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+    0, 1
+  ],
+  [
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
+    3, 1
+  ]
+]
 
 const game = {
   level: 1,
   mode: 'daydream',
   boardArray: structuredClone(basicArray),
+  gameBoards: [basicArray, secondArray],
   playerStartPosition: [1, 1],
   trapPower: 1,
   totalScore: 5,
@@ -226,25 +339,58 @@ const displayBoard = () => {
   }
 }
 
-const startGame = () => {
+const startLevel = (board) => {
   document.querySelector('#game-container-div').innerHTML = ''
-  game.boardArray = structuredClone(basicArray)
+  game.boardArray = structuredClone(board)
   player.boardLocation = structuredClone(game.playerStartPosition)
   gameLevel.innerText = game.level
   player.lives = 3
+  player.keys = 0
+  player.score = 0
   hearts.innerText = player.lives
+  playerKeys.innerText = player.keys
+  playerScore.innerText = player.score
   let displayGameBoard = document.createElement('div')
   displayGameBoard.setAttribute('id', 'game-board-div')
   document.querySelector('#game-container-div').appendChild(displayGameBoard)
   displayBoard()
 }
+
+const displayNextLevelMenu = (currentLevel) => {
+  document.querySelector('#game-container-div').innerHTML = ''
+  let nextLevelMenu = document.createElement('div')
+  nextLevelMenu.setAttribute('id', 'game-next-level-div')
+  let nextLevelHeader = document.createElement('h3')
+  nextLevelHeader.setAttribute('id', 'next-level-header')
+  nextLevelHeader.innerText = 'hello'
+  let restartLevelButton = document.createElement('button')
+  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.innerText = 'Restart Level'
+  let nextLevelButton = document.createElement('button')
+  nextLevelButton.setAttribute('id', 'next-level-button')
+  nextLevelButton.innerText = 'Next Level'
+  nextLevelMenu.appendChild(nextLevelHeader)
+  nextLevelMenu.appendChild(restartLevelButton)
+  nextLevelMenu.appendChild(nextLevelButton)
+  document.querySelector('#game-container-div').appendChild(nextLevelMenu)
+  restartLevelButton.addEventListener('click', () => {
+    startLevel(game.gameBoards[game.level - 1])
+  })
+  nextLevelButton.addEventListener('click', () => {
+    game.level++
+    startLevel(game.gameBoards[game.level - 1])
+  })
+
+  // startLevel(game.gameBoards[game.level - 1])
+}
+
 const endGame = (gameStatus) => {
   if (gameStatus === 'death') {
-    startGame()
+    startLevel(game.boardArray)
   } else if (gameStatus === 'exit') {
     if (player.keys < game.totalKeys) {
       alert('missing some stuff')
-    } else alert('collected all keys')
+    } else displayNextLevelMenu(game.level)
   }
 }
 
@@ -259,23 +405,22 @@ const checkIfTrap = () => {
     player.lives -= game.trapPower
     hearts.innerText = ''
     hearts.innerText = player.lives
-    if (player.lives === 0) {
+    if (player.lives < 0) {
       endGame('death')
     }
-    // alert('trap')
   }
 }
 
 const checkIfScore = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 5) {
     player.score++
-    document.querySelector('#currentPoints').innerText = player.score
+    playerScore.innerText = player.score
   }
 }
 const checkIfKey = () => {
   if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 6) {
     player.keys++
-    document.querySelector('#currentKeys').innerText = player.keys
+    playerKeys.innerText = player.keys
   }
 }
 
@@ -286,4 +431,4 @@ const checkLocation = () => {
   checkIfKey()
 }
 document.querySelector('#game-container-div').innerHTML = ''
-startGame()
+startLevel(game.gameBoards[0])
