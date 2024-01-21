@@ -233,11 +233,26 @@ let levelTwoLight = {
 
 let daydream = [levelOneLight, levelTwoLight]
 
-class Game {
-  constructor(mode, width) {
-    this.height = height
-    this.width = width
+export class Game {
+  constructor(mode) {
+    this.level = 1
+    this.mode = mode
+    this.boardArray = structuredClone(daydream[0].board)
+    this.gameBoards = structuredClone(daydream)
+    this.playerStartPosition = [1, 1]
+    this.trapPower = 1
+    this.totalScore = 5
+    this.totalKeys = 2
+  }
+  // enrollStudent(student) {
+  //   this.students.push(student)
+  // }
+  // listEnrollmentNumbers() {
+  //   return this.students.length
+  // }
+  updateLevel() {
+    this.level++
   }
 }
 
-export { daydream }
+// export { Game }

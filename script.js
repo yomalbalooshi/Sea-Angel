@@ -14,17 +14,8 @@ let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
 let playerScore = document.querySelector('#currentPoints')
 let playerKeys = document.querySelector('#currentKeys')
-import { daydream } from './dataStore.js'
-const game = {
-  level: 1,
-  mode: 'daydream',
-  boardArray: structuredClone(daydream[0].board),
-  gameBoards: structuredClone(daydream),
-  playerStartPosition: [1, 1],
-  trapPower: 1,
-  totalScore: 5,
-  totalKeys: 2
-}
+import { Game } from './dataStore.js'
+let game = new Game('daydream')
 const player = {
   //boardLocation syntax: [up/down, left/right]
   boardLocation: [],
@@ -176,7 +167,7 @@ const displayNextLevelMenu = (currentLevel) => {
     startLevel(game.gameBoards[game.level - 1].board)
   })
   nextLevelButton.addEventListener('click', () => {
-    game.level++
+    game.updateLevel()
     startLevel(game.gameBoards[game.level - 1].board)
   })
 }
@@ -248,5 +239,4 @@ const checkLocation = () => {
   checkIfKey()
 }
 document.querySelector('#game-container-div').innerHTML = ''
-console.log(daydream[0].board)
 startLevel(game.gameBoards[0].board)
