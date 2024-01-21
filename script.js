@@ -18,7 +18,7 @@ import { daydream } from './dataStore.js'
 const game = {
   level: 1,
   mode: 'daydream',
-  boardArray: structuredClone(daydream[0]),
+  boardArray: structuredClone(daydream[0].board),
   gameBoards: structuredClone(daydream),
   playerStartPosition: [1, 1],
   trapPower: 1,
@@ -173,11 +173,11 @@ const displayNextLevelMenu = (currentLevel) => {
   nextLevelMenu.appendChild(nextLevelButton)
   document.querySelector('#game-container-div').appendChild(nextLevelMenu)
   restartLevelButton.addEventListener('click', () => {
-    startLevel(game.gameBoards[game.level - 1])
+    startLevel(game.gameBoards[game.level - 1].board)
   })
   nextLevelButton.addEventListener('click', () => {
     game.level++
-    startLevel(game.gameBoards[game.level - 1])
+    startLevel(game.gameBoards[game.level - 1].board)
   })
 }
 const displayEndGameMenu = () => {
@@ -191,7 +191,7 @@ const displayEndGameMenu = () => {
   restartLevelButton.setAttribute('id', 'restart')
   restartLevelButton.innerText = 'Restart Level'
   restartLevelButton.addEventListener('click', () => {
-    startLevel(game.gameBoards[game.level - 1])
+    startLevel(game.gameBoards[game.level - 1].board)
   })
   endGameMenu.appendChild(endGameMenuHeader)
   endGameMenu.appendChild(restartLevelButton)
@@ -248,4 +248,5 @@ const checkLocation = () => {
   checkIfKey()
 }
 document.querySelector('#game-container-div').innerHTML = ''
-startLevel(game.gameBoards[0])
+console.log(daydream[0].board)
+startLevel(game.gameBoards[0].board)
