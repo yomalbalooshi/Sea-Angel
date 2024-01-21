@@ -63,3 +63,8 @@ body {
 .board-key-light {
   background-color: #ab1d8a;
 }
+.board-show-dark {
+}
+.board-other-dark {
+  background-color: black;
+}
