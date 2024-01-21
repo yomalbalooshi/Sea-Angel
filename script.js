@@ -16,6 +16,7 @@ let playerScore = document.querySelector('#currentPoints')
 let playerKeys = document.querySelector('#currentKeys')
 import { Game } from './dataStore.js'
 let game = new Game('daydream')
+console.log(game)
 const player = {
   //boardLocation syntax: [up/down, left/right]
   boardLocation: [],
@@ -168,6 +169,7 @@ const displayNextLevelMenu = (currentLevel) => {
   })
   nextLevelButton.addEventListener('click', () => {
     game.updateLevel()
+    game.updateAccumTotals(player.score, player.keys)
     startLevel(game.gameBoards[game.level - 1].board)
   })
 }

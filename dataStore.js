@@ -7,13 +7,16 @@
 // 5 signifies points
 // 6 signifies keys
 let levelOneLight = {
+  startPosition: [3, 3],
+  totalKeys: 2,
+  totalScore: 7,
   board: [
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1
     ],
     [
-      1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0,
+      1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0,
       0, 1
     ],
     [
@@ -21,7 +24,7 @@ let levelOneLight = {
       6, 1
     ],
     [
-      1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 5, 1, 0, 0, 0, 0, 1, 1, 1, 0,
+      1, 0, 0, 2, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 5, 1, 0, 0, 0, 0, 1, 1, 1, 0,
       0, 1
     ],
     [
@@ -119,6 +122,9 @@ let levelOneLight = {
   ]
 }
 let levelTwoLight = {
+  startPosition: [1, 1],
+  totalKeys: 4,
+  totalScore: 3,
   board: [
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -237,12 +243,16 @@ export class Game {
   constructor(mode) {
     this.level = 1
     this.mode = mode
-    this.boardArray = structuredClone(daydream[0].board)
-    this.gameBoards = structuredClone(daydream)
-    this.playerStartPosition = [1, 1]
+    this.boardArray = {}
+    this.gameBoards = []
+    this.playerStartPosition = []
     this.trapPower = 1
-    this.totalScore = 5
-    this.totalKeys = 2
+    this.totalGameScore = 0 //the highest score to get
+    this.totalGameKeys = 0
+    this.accumScore = 0
+    this.accumKeys = 0
+    this.initializeBoardArrays()
+    this.initializeGameVariables()
   }
   // enrollStudent(student) {
   //   this.students.push(student)
@@ -251,7 +261,30 @@ export class Game {
   //   return this.students.length
   // }
   updateLevel() {
+    this.playerStartPosition = this.gameBoards[this.level].startPosition
     this.level++
+  }
+  initializeBoardArrays() {
+    if (this.mode === 'daydream') {
+      this.gameBoards = structuredClone(daydream)
+      this.boardArray = structuredClone(daydream[0].board)
+      this.playerStartPosition = daydream[0].startPosition
+    } else if (this.mode === 'nightmare') {
+      this.gameBoards = structuredClone(nightmare)
+      this.boardArray = structuredClone(nightmare[0].board)
+    }
+  }
+  initializeGameVariables() {
+    for (let i = 0; i < this.gameBoards.length; i++) {
+      this.totalGameScore += this.gameBoards[i].totalScore
+      this.totalGameKeys += this.gameBoards[i].totalKeys
+    }
+  }
+  updateAccumTotals(score, key) {
+    this.accumScore += score
+    this.accumKeys += key
+    console.log(this.accumKeys)
+    console.log(this.accumScore)
   }
 }
 
