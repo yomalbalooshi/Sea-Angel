@@ -728,6 +728,7 @@ export class Game {
   updateLevel() {
     this.playerStartPosition = this.gameBoards[this.level].startPosition
     this.trapPower = this.gameBoards[this.level].trapPower
+    this.levelExitKeys = this.gameBoards[this.level].totalKeys
     this.level++
   }
   initializeBoardArrays() {
@@ -742,6 +743,7 @@ export class Game {
       this.boardArray = structuredClone(nightmare[0].board)
       this.playerStartPosition = nightmare[0].startPosition
       this.trapPower = nightmare[0].trapPower
+      this.levelExitKeys = nightmare[0].totalKeys
     }
   }
   initializeGameVariables() {
