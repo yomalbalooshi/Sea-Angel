@@ -15,6 +15,7 @@ let gameLevel = document.querySelector('#currentlevel')
 let hearts = document.querySelector('#currentLivesLeft')
 let playerScore = document.querySelector('#currentPoints')
 let playerKeys = document.querySelector('#currentKeys')
+let movementPermission
 
 import { Game } from './dataStore.js'
 
@@ -28,66 +29,45 @@ const player = {
   keys: 0
 }
 
-const movePlayerUp = () => {
+const movePlayer = (updown = 0, leftright = 0) => {
   if (
-    player.boardLocation[0] !== 1 &&
-    game.boardArray[player.boardLocation[0] - 1][player.boardLocation[1]] !== 1
-  ) {
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
-    player.boardLocation[0] = player.boardLocation[0] - 1
-
-    checkLocation()
-    if (checkIfExit() == true) {
-      endGame('exit')
-    } else {
-      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-      displayBoard()
-    }
-  }
-}
-const movePlayerDown = () => {
-  if (
+    // not at the top wall
+    player.boardLocation[0] + updown !== 0 &&
+    // not at the bottom wall
     player.boardLocation[0] !== game.boardArray.length - 1 &&
-    game.boardArray[player.boardLocation[0] + 1][player.boardLocation[1]] !== 1
-  ) {
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
-    player.boardLocation[0] = player.boardLocation[0] + 1
-    checkLocation()
-    if (checkIfExit() == true) {
-      endGame('exit')
-    } else {
-      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-      displayBoard()
-    }
-  }
-}
-const movePlayerRight = () => {
-  if (
+    // not at the right wall
     player.boardLocation[1] !== game.boardArray[0].length &&
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1] + 1] !== 1
+    // not at the left wall
+    player.boardLocation[1] + leftright !== 0 &&
+    // not moving into a wall
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 1
   ) {
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
-    player.boardLocation[1] = player.boardLocation[1] + 1
-    checkLocation()
-    if (checkIfExit() == true) {
-      endGame('exit')
+    // check if next location is an exit
+    if (
+      checkIfExit(
+        player.boardLocation[0] + updown,
+        player.boardLocation[1] + leftright
+      ) == true
+    ) {
+      // check if exit allowed
+      if (canExitMaze()) {
+        game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
+        player.boardLocation[0] = player.boardLocation[0] + updown
+        player.boardLocation[1] = player.boardLocation[1] + leftright
+        // register the move on the board
+        game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+        endGame('exit')
+      } else {
+        alert('missing some stuff')
+      }
     } else {
-      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
-      displayBoard()
-    }
-  }
-}
-const movePlayerLeft = () => {
-  if (
-    player.boardLocation[1] !== 1 &&
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1] - 1] !== 1
-  ) {
-    game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
-    player.boardLocation[1] = player.boardLocation[1] - 1
-    checkLocation()
-    if (checkIfExit() == true) {
-      endGame('exit')
-    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
+      player.boardLocation[0] = player.boardLocation[0] + updown
+      player.boardLocation[1] = player.boardLocation[1] + leftright
+      checkLocation()
+      // register the move on the board
       game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
       displayBoard()
     }
@@ -97,15 +77,45 @@ const movePlayerLeft = () => {
 // key down listener syntax taken from: https://www.tutorialspoint.com/detecting-arrow-key-presses-in-javascript
 document.addEventListener('keydown', function (e) {
   if (e.code == 'KeyW') {
-    movePlayerUp()
+    // move Player Up
+    movePlayer(-1)
   } else if (e.code == 'KeyS') {
-    movePlayerDown()
+    // move Player Down
+    movePlayer(1)
   } else if (e.code == 'KeyD') {
-    movePlayerRight()
+    // move Player Right
+    movePlayer(0, 1)
   } else if (e.code == 'KeyA') {
-    movePlayerLeft()
+    // move Player Left
+    movePlayer(0, -1)
   }
 })
+const displayBoardShowAll = () => {
+  let gameBoard = document.querySelector('#game-board-div')
+  gameBoard.innerHTML = ''
+  for (let i = 0; i < game.boardArray.length; i++) {
+    for (let j = 0; j < game.boardArray[i].length; j++) {
+      const boardElement = document.createElement('div')
+      boardElement.classList.add('board-element')
+      if (game.boardArray[i][j] === 2) {
+        boardElement.classList.add('board-player')
+      } else if (game.boardArray[i][j] === 0) {
+        boardElement.classList.add('board-floor-light')
+      } else if (game.boardArray[i][j] === 1) {
+        boardElement.classList.add('board-wall-light')
+      } else if (game.boardArray[i][j] === 3) {
+        boardElement.classList.add('board-exit-light')
+      } else if (game.boardArray[i][j] === 4) {
+        boardElement.classList.add('board-trap-light')
+      } else if (game.boardArray[i][j] === 5) {
+        boardElement.classList.add('board-score-light')
+      } else if (game.boardArray[i][j] === 6) {
+        boardElement.classList.add('board-key-light')
+      }
+      gameBoard.appendChild(boardElement)
+    }
+  }
+}
 
 const displayBoard = () => {
   let gameBoard = document.querySelector('#game-board-div')
@@ -150,6 +160,7 @@ const startLevel = (board) => {
   document.querySelector('#game-container-div').innerHTML = ''
   game.boardArray = structuredClone(board)
   player.boardLocation = structuredClone(game.playerStartPosition)
+  movementPermission = true
   gameLevel.innerText = game.level
   player.lives = 3
   player.keys = 0
@@ -211,7 +222,6 @@ const displayNextLevelMenu = (currentLevel) => {
   nextLevelButton.addEventListener('click', () => {
     game.updateLevel()
     game.updateAccumTotals(player.score, player.keys)
-
     startLevel(game.gameBoards[game.level - 1].board)
   })
 }
@@ -249,26 +259,24 @@ const displayEndGameMenu = () => {
   endGameMenu.appendChild(restartLevelButton)
   document.querySelector('#game-container-div').appendChild(endGameMenu)
 }
-
+const canExitMaze = () => {
+  return player.keys === game.levelExitKeys
+}
 const endGame = (gameStatus) => {
   if (gameStatus === 'death') {
     game.updateDeaths()
     startLevel(structuredClone(game.gameBoards[game.level - 1]).board)
   } else if (gameStatus === 'exit') {
-    if (player.keys < game.levelExitKeys) {
-      alert('missing some stuff')
+    if (game.level === game.gameBoards.length) {
+      game.updateAccumTotals(player.score, player.keys)
+      displayEndGameMenu()
     } else {
-      if (game.level === game.gameBoards.length) {
-        game.updateAccumTotals(player.score, player.keys)
-        displayEndGameMenu()
-      } else {
-        displayNextLevelMenu(game.level)
-      }
+      displayNextLevelMenu(game.level)
     }
   }
 }
-const checkIfExit = () => {
-  if (game.boardArray[player.boardLocation[0]][player.boardLocation[1]] === 3) {
+const checkIfExit = (x, y) => {
+  if (game.boardArray[x][y] === 3) {
     return true
   }
 }
@@ -302,4 +310,11 @@ const checkLocation = () => {
   checkIfTrap()
 }
 document.querySelector('#game-container-div').innerHTML = ''
+
+function myTimer() {
+  displayBoardShowAll()
+  setTimeout(displayBoard, 3000)
+}
+
 startLevel(game.gameBoards[0].board)
+setInterval(myTimer, 15000)

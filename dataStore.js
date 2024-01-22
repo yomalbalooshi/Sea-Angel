@@ -473,7 +473,7 @@ let levelOneNightmare = {
 let levelTwoNightmare = {
   startPosition: [1, 1],
   totalKeys: 4,
-  totalScore: 3,
+  totalScore: 8,
   trapPower: 1,
   board: [
     [
@@ -590,7 +590,7 @@ let levelThreeNightmare = {
   startPosition: [1, 1],
   totalKeys: 2,
   totalScore: 7,
-  trapPower: 0.5,
+  trapPower: 1,
   board: [
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
