@@ -6,7 +6,8 @@
 // 4 signifies trap
 // 5 signifies points
 // 6 signifies keys
-
+// 7 signifies switch
+// 8 signifies trap door
 let gameMode = document.querySelector('#daydreamMode')
 gameMode.addEventListener('click', () => {
   window.location.href = './index.html'
@@ -42,7 +43,15 @@ const movePlayer = (updown = 0, leftright = 0) => {
     // not moving into a wall
     game.boardArray[player.boardLocation[0] + updown][
       player.boardLocation[1] + leftright
-    ] !== 1
+    ] !== 1 &&
+    // not moving into a switch
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 7 &&
+    //not moving into a trap door
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 8
   ) {
     // check if next location is an exit
     if (
@@ -73,7 +82,25 @@ const movePlayer = (updown = 0, leftright = 0) => {
     }
   }
 }
-
+const openSwitch = () => {
+  if (
+    game.boardArray[player.boardLocation[0] - 1][player.boardLocation[1]] ==
+      7 ||
+    game.boardArray[player.boardLocation[0]][player.boardLocation[1] - 1] ==
+      7 ||
+    game.boardArray[player.boardLocation[0]][player.boardLocation[1] + 1] ==
+      7 ||
+    game.boardArray[player.boardLocation[0] + 1][player.boardLocation[1]] == 7
+  ) {
+    console.log(game.boardArray)
+    game.boardArray[game.trapDoorPosition[0]][game.trapDoorPosition[1]] = 0
+    console.log('opened trap door')
+    console.log(game.boardArray)
+    displayBoard()
+  } else {
+    console.log(game.trapDoorPosition)
+  }
+}
 // key down listener syntax taken from: https://www.tutorialspoint.com/detecting-arrow-key-presses-in-javascript
 document.addEventListener('keydown', function (e) {
   if (e.code == 'KeyW') {
@@ -88,6 +115,8 @@ document.addEventListener('keydown', function (e) {
   } else if (e.code == 'KeyA') {
     // move Player Left
     movePlayer(0, -1)
+  } else if (e.code === 'Space') {
+    openSwitch()
   }
 })
 const displayBoardShowAll = () => {
@@ -146,6 +175,10 @@ const displayBoard = () => {
           boardElement.classList.add('board-score-light')
         } else if (game.boardArray[i][j] === 6) {
           boardElement.classList.add('board-key-light')
+        } else if (game.boardArray[i][j] === 7) {
+          boardElement.classList.add('board-switch-light')
+        } else if (game.boardArray[i][j] === 8) {
+          boardElement.classList.add('board-trapdoor-light')
         }
       } else {
         boardElement.classList.add('board-other-dark')
@@ -317,4 +350,4 @@ function myTimer() {
 }
 
 startLevel(game.gameBoards[0].board)
-setInterval(myTimer, 15000)
+setInterval(myTimer, 10000)

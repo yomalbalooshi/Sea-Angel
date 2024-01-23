@@ -2,7 +2,7 @@ body {
   margin: 0;
   display: grid;
   grid-template-rows: 100px 1fr;
-  grid-template-columns: 2fr 594px 2fr;
+  grid-template-columns: 2fr 600px 3fr;
   grid-template-areas:
     'header header header '
     'leftsidepanel gameContainerDiv rightsidepanel';
@@ -16,6 +16,7 @@ body {
 #left-side-panel {
   background-color: lightsalmon;
   grid-area: leftsidepanel;
+  text-align: center;
 }
 #right-side-panel {
   background-color: orange;
@@ -62,6 +63,12 @@ body {
 }
 .board-key-light {
   background-color: #ab1d8a;
+}
+.board-switch-light {
+  background-color: #110841;
+}
+.board-trapdoor-light {
+  background-color: rgb(144, 135, 131);
 }
 .board-show-dark {
 }
