@@ -12,10 +12,10 @@ let gameMode = document.querySelector('#nightmareMode')
 gameMode.addEventListener('click', () => {
   window.location.href = './nightmare.html'
 })
-let gameLevel = document.querySelector('#currentlevel')
-let hearts = document.querySelector('#currentLivesLeft')
-let playerScore = document.querySelector('#currentPoints')
-let playerKeys = document.querySelector('#currentKeys')
+let gameLevel
+let hearts
+let playerScore
+let playerKeys
 
 import { Game } from './dataStore.js'
 
@@ -68,7 +68,7 @@ const movePlayer = (updown = 0, leftright = 0) => {
         game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
         endGame('exit')
       } else {
-        alert('missing some stuff')
+        document.querySelector('.game-info').innerText = 'Missing some keys!'
       }
     } else {
       game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
@@ -91,13 +91,13 @@ const openSwitch = () => {
       7 ||
     game.boardArray[player.boardLocation[0] + 1][player.boardLocation[1]] == 7
   ) {
-    console.log(game.boardArray)
     game.boardArray[game.trapDoorPosition[0]][game.trapDoorPosition[1]] = 0
-    console.log('opened trap door')
-    console.log(game.boardArray)
+    document.querySelector('.game-info').innerText = 'Opened a trap door!'
     displayBoard()
   } else {
-    console.log(game.trapDoorPosition)
+    document.querySelector(
+      '.game-info'
+    ).innerText = `Stand infront of a switch to use it!`
   }
 }
 // key down listener syntax taken from: https://www.tutorialspoint.com/detecting-arrow-key-presses-in-javascript
@@ -122,10 +122,41 @@ document.addEventListener('keydown', function (e) {
 const displayBoard = () => {
   let gameBoard = document.querySelector('#game-board-div')
   gameBoard.innerHTML = ''
+  let size
+  switch (game.boardArray.length) {
+    case 11:
+      size = 54
+      break
+    case 21:
+      size = 28
+      break
+    case 31:
+      size = 19
+      break
+    case 41:
+      size = 14
+      break
+    default:
+      size = 20
+  }
+  document
+    .querySelector('#game-board-div')
+    .style.setProperty(
+      'grid-template-rows',
+      `repeat(${game.boardArray.length}, 1fr)`
+    )
+  document
+    .querySelector('#game-board-div')
+    .style.setProperty(
+      'grid-template-columns',
+      `repeat(${game.boardArray.length}, 1fr)`
+    )
   for (let i = 0; i < game.boardArray.length; i++) {
     for (let j = 0; j < game.boardArray[i].length; j++) {
       const boardElement = document.createElement('div')
       boardElement.classList.add('board-element')
+      boardElement.style.setProperty('width', `${size}px`)
+      boardElement.style.setProperty('height', `${size}px`)
       if (game.boardArray[i][j] === 2) {
         boardElement.classList.add('board-player')
       } else if (game.boardArray[i][j] === 0) {
@@ -152,23 +183,81 @@ const displayBoard = () => {
 
 const startLevel = (board) => {
   document.querySelector('#game-container-div').innerHTML = ''
+  document.querySelector('.game-info').innerText = ''
   game.boardArray = structuredClone(board)
   player.boardLocation = structuredClone(game.playerStartPosition)
-  gameLevel.innerText = game.level
   player.lives = 3
   player.keys = 0
   player.score = 0
-  hearts.innerText = player.lives
-  playerKeys.innerText = player.keys
-  playerScore.innerText = player.score
+  // The div containing all of the game - board and player information
+  let fullGameDisplay = document.createElement('div')
+  fullGameDisplay.setAttribute('id', 'game-full-display-div')
+  fullGameDisplay.innerHTML = ''
+
+  // The div containing all of the player information
+  let displayGameVariables = document.createElement('div')
+  displayGameVariables.classList.add('game-variables-div')
+
+  // The elements containing the player information
+
+  //Current Level
+  let gameVariablesLevelSpan = document.createElement('span')
+  gameVariablesLevelSpan.innerText = 'Lvl. '
+  let gameVariablesLevelSpanInfo = document.createElement('span')
+  gameVariablesLevelSpanInfo.setAttribute('id', 'currentlevel')
+  gameVariablesLevelSpan.appendChild(gameVariablesLevelSpanInfo)
+
+  //Lives Left
+  let gameVariablesHeartsSpan = document.createElement('span')
+  gameVariablesHeartsSpan.innerText = 'Hearts: '
+  let gameVariablesHeartsSpanInfo = document.createElement('span')
+  gameVariablesHeartsSpan.appendChild(gameVariablesHeartsSpanInfo)
+  gameVariablesHeartsSpanInfo.setAttribute('id', 'currentLivesLeft')
+
+  //Keys collected
+  let gameVariablesKeySpan = document.createElement('span')
+  gameVariablesKeySpan.innerText = 'Keys: '
+  let gameVariablesKeySpanInfo = document.createElement('span')
+  gameVariablesKeySpan.appendChild(gameVariablesKeySpanInfo)
+  gameVariablesKeySpanInfo.setAttribute('id', 'currentKeys')
+
+  // Points Collected
+  let gameVariablesPointsSpan = document.createElement('span')
+  gameVariablesPointsSpan.innerText = 'Points:'
+  let gameVariablespointsSpanInfo = document.createElement('span')
+  gameVariablesPointsSpan.appendChild(gameVariablespointsSpanInfo)
+  gameVariablespointsSpanInfo.setAttribute('id', 'currentPoints')
+
+  displayGameVariables.appendChild(gameVariablesLevelSpan)
+  displayGameVariables.appendChild(gameVariablesHeartsSpan)
+  displayGameVariables.appendChild(gameVariablesKeySpan)
+  displayGameVariables.appendChild(gameVariablesPointsSpan)
+
+  // The div containing the board of the game
   let displayGameBoard = document.createElement('div')
   displayGameBoard.setAttribute('id', 'game-board-div')
-  document.querySelector('#game-container-div').appendChild(displayGameBoard)
+
+  document.querySelector('#game-container-div').appendChild(fullGameDisplay)
+  document
+    .querySelector('#game-full-display-div')
+    .appendChild(displayGameVariables)
+  document.querySelector('#game-full-display-div').appendChild(displayGameBoard)
+  gameLevel = document.querySelector('#currentlevel')
+  gameLevel.innerText = game.level
+  hearts = document.querySelector('#currentLivesLeft')
+  hearts.innerText = player.lives
+  playerKeys = document.querySelector('#currentKeys')
+  playerKeys.innerText = player.keys
+  playerScore = document.querySelector('#currentPoints')
+  playerScore.innerText = player.score
+
   displayBoard()
 }
 
 const displayNextLevelMenu = (currentLevel) => {
   document.querySelector('#game-container-div').innerHTML = ''
+  document.querySelector('.game-info').innerText = ''
+
   let nextLevelMenu = document.createElement('div')
   nextLevelMenu.setAttribute('id', 'game-next-level-div')
 
@@ -222,6 +311,8 @@ const displayNextLevelMenu = (currentLevel) => {
 
 const displayEndGameMenu = () => {
   document.querySelector('#game-container-div').innerHTML = ''
+  document.querySelector('.game-info').innerText = ''
+
   let endGameMenu = document.createElement('div')
   endGameMenu.setAttribute('id', 'end-game-div')
   let endGameMenuHeader = document.createElement('h3')
@@ -281,6 +372,7 @@ const checkIfTrap = () => {
     player.lives -= game.trapPower
     hearts.innerText = ''
     hearts.innerText = player.lives
+    document.querySelector('.game-info').innerText = 'Bubble trap!'
     if (player.lives < 0) {
       endGame('death')
     }

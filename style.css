@@ -1,7 +1,7 @@
 body {
   margin: 0;
   display: grid;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 90px 1fr;
   grid-template-columns: 2fr 600px 3fr;
   grid-template-areas:
     'header header header '
@@ -13,10 +13,12 @@ body {
   grid-area: header;
   text-align: center;
 }
+.side-panel {
+  text-align: center;
+}
 #left-side-panel {
   background-color: lightsalmon;
   grid-area: leftsidepanel;
-  text-align: center;
 }
 #right-side-panel {
   background-color: orange;
@@ -27,15 +29,16 @@ body {
   grid-area: gameContainerDiv;
 }
 #game-board-div {
+  width: 100%;
   display: grid;
   grid-gap: 0px;
-  grid-template-rows: repeat(27, 1fr);
-  grid-template-columns: repeat(27, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-columns: repeat(11, 1fr);
 }
 .board-element {
   /* border: 1px solid navy; */
-  width: 22px;
-  height: 22px;
+  /* width: 28px;
+  height: 28px; */
   margin: 0;
 }
 .board-wall-light {
@@ -74,4 +77,20 @@ body {
 }
 .board-other-dark {
   background-color: #313131;
+}
+.game-variables-div {
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  padding: 5px 0;
+}
+ul {
+  list-style-type: none;
+  text-align: left;
+}
+ol {
+  text-align: left;
+}
+li {
+  padding: 5px 0px;
 }

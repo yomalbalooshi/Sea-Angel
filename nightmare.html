@@ -5,24 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
   <script defer src="scriptNightmare.js" type="module" charset="utf-8"></script>
-  <title>The Maze Game:Nightmare</title>
+  <title>Sea Angel: Deeper Waters</title>
 </head>
 <body>
-  <header class="game-header"><h1>The Maze Game:Nightmare</h1></header>
+  <header class="game-header"><h1>Sea Angel: Deeper Waters</h1></header>
   <aside class="side-panel" id="left-side-panel">
-    <h2>Level</h2>
-    <h3 id="currentlevel">1</h3>
-    <h2>Lives left</h2>
-    <h3 id="currentLivesLeft">3</h3>
-    <h2>Points</h2>
-    <h3 id="currentPoints">0</h3>
-    <h2>keys collected</h2>
-    <h3 id="currentKeys">0</h3>
+    <h2>Game Information</h2>
+    <p class="game-info"></p>
   </aside>
   <div id="game-container-div"></div>
   
     <aside class="side-panel" id="right-side-panel">
-      <button class="modebutton" id="daydreamMode">Daydream</button>
+      <h2>Control</h2>
+      <ul class="key-instructions">
+        <li class="key-instructions-item">W - Move Up</li>
+        <li class="key-instructions-item">S- Move Down</li>
+        <li class="key-instructions-item">A- Move Left</li>
+        <li class="key-instructions-item">D - Move Right</li>
+        <li class="key-instructions-item">Space - Use Switch</li>
+      </ul>
+      <h2>Instructions</h2>
+      <ol class="general-instructions">
+        <li class="general-instructions-item">Navigate the dark waters</li>
+        <li class="general-instructions-item">Wait for the map to light up!</li>
+        <li class="general-instructions-item">Collect Keys to exit</li>
+        <li class="general-instructions-item">Use switches to open trap doors</li>
+        <li class="general-instructions-item">Avoid traps</li>
+      </ol>
+      <button class="modebutton" id="daydreamMode">Shallows</button>
       </aside>
 </body>
 </html>
+
