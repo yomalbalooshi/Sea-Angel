@@ -1,6 +1,6 @@
 # The Maze Game
 
-## Date: 17/01/24
+## Date: 24/01/24
 
 ## Version: 1.0
 
@@ -8,19 +8,19 @@
 
 ---
 
-### The maze game is a three level puzzle where players have to find their way to the exit.
+### Help the sea angel find its' home! Sea Angel: Shallows is a four level puzzle where players have to find their way to the exit. Following it is Sea Angel: Deeper Waters, a four level puzzle where players can only see a small area around them to navigate.
 
 ---
 
 ## Game Mechanics
 
-### Light Mode:
+### Sea Angel: Shallows:
 
-#### The game utilizes the player's keyboard inputs. pressing any of the arrow keys will move the player one step in their respective direction. All the player has to do is move around the maze until they find the right path to reach the other end. The only issue is, they have a set amount of time to finish the level; else, they lose.
+#### The game utilizes the player's keyboard inputs. pressing any of: W, A, S, D keys will move the player one step in their respective direction. Pressing the space bar would pull a lever and open a door to a section of the maze. All the player has to do is move around the maze until they find the right path to reach the other end. The only issue is, they have to find the keys to exit.
 
-### Nightmare Mode:
+### Sea Angel: Deeper Waters
 
-#### In nightmare mode, the players have to navigate through the maze again **_BUT_** now they can only see a small area around them. They have to use their memory to find the right path and get out before the time ends.
+#### In nightmare mode, the players have to navigate through the maze again **_BUT_** now they can only see a small area around them. They have to use their memory to find the right path and get out.
 
 ---
 
@@ -30,39 +30,112 @@
 - HTML
 - CSS
 - Javascript
+- Procreate
+- Trello
+- Surge
 
 ---
 
-## Game Initial Wireframes
+## Game Links
 
-#### Level 1/Initial Page
+[play the game](sea-angel.surge.sh) |
+[Trello Board](https://trello.com/b/r7tWV1KZ/maze-game)
 
-![Image](https://i.pinimg.com/736x/ee/c8/ad/eec8ad96da0346a781adf1c6d7707e74.jpg)
+---
 
-#### Level 1: Ball movement
+## Game Screenshots
 
-![Image](https://i.pinimg.com/736x/55/9f/30/559f3044e7acc8f9eb6e4bb842f2d3e0.jpg)
+#### Shallows: Level 1
 
-#### Level 1: Winning message
+![Image](https://i.pinimg.com/736x/59/c0/92/59c0929e572471ca3bf3adfad306d0d2.jpg)
 
-![Image](https://i.pinimg.com/736x/3c/7d/e2/3c7de2947633ef71a43c8742afe1582f.jpg)
+#### Shallows: Level 1 Completion
 
-#### Level 2/Initial Page
+![Image](https://i.pinimg.com/736x/7f/71/f3/7f71f3db67f166730ad963e795b328e2.jpg)
 
-![Image](https://i.pinimg.com/736x/9a/6f/c9/9a6fc9935293d5cff7672021b9729352.jpg)
+#### Shallows: Level 2
 
-#### Level 2/Ball movement
+![Image](https://i.pinimg.com/736x/52/f1/82/52f182ad818eb4fb241b5f06a9113c83.jpg)
 
-![Image](https://i.pinimg.com/736x/8b/ad/6f/8bad6f679ce3a5c5e2393c929c487bab.jpg)
+#### Shallows: Level 3
 
-#### Nightmare mode Level 1
+![Image](https://i.pinimg.com/736x/c7/05/06/c705063660c6cf9650eae004ce7759cf.jpg)
 
-![Image](https://i.pinimg.com/736x/0b/f7/3d/0bf73d1cd3237c26f0f17561c7d84b48.jpg)
+#### Deeper Waters: level 2 lights on
 
-#### Nightmare mode Level 1: Ball movement
+![Image](https://i.pinimg.com/736x/e9/ef/2d/e9ef2dde760931397b8d90a935c92c9c.jpg)
 
-![Image](https://i.pinimg.com/736x/cd/cf/49/cdcf495ad6449ec827b3a4d9f1021946.jpg)
+#### Deeper Waters: level 2 lights off
 
-#### Nightmare mode Level 1: Ball movement
+![Image](https://i.pinimg.com/736x/67/72/20/677220aa82de6d6f6d45b60671df358a.jpg)
 
-![Image](https://i.pinimg.com/736x/6e/52/8c/6e528cc4573654042bb31c1f3362c937.jpg)
+#### Deeper Waters: level 4 lights on
+
+![Image](https://i.pinimg.com/736x/be/b3/6a/beb36a4637ffd49b76e450af6c5d29a5.jpg)
+
+---
+
+## Game Code Preview
+
+#### The entire game board grid is made up of divs. Event listeners are added on keys: W,A,S,D, and Space Bar. The following snippet of code moves the player's board location based on the key pressed down:
+
+```javascript
+const movePlayer = (updown = 0, leftright = 0) => {
+  if (
+    // not at the top wall
+    player.boardLocation[0] + updown !== 0 &&
+    // not at the bottom wall
+    player.boardLocation[0] !== game.boardArray.length - 1 &&
+    // not at the right wall
+    player.boardLocation[1] !== game.boardArray[0].length &&
+    // not at the left wall
+    player.boardLocation[1] + leftright !== 0 &&
+    // not moving into a wall
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 1 &&
+    // not moving into a switch
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 7 &&
+    //not moving into a trap door
+    game.boardArray[player.boardLocation[0] + updown][
+      player.boardLocation[1] + leftright
+    ] !== 8
+  ) {
+    // check if next location is an exit
+    if (
+      checkIfExit(
+        player.boardLocation[0] + updown,
+        player.boardLocation[1] + leftright
+      ) == true
+    ) {
+      // check if exit allowed
+      if (canExitMaze()) {
+        game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
+        player.boardLocation[0] = player.boardLocation[0] + updown
+        player.boardLocation[1] = player.boardLocation[1] + leftright
+        // register the move on the board
+        game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+        endGame('exit')
+      } else {
+        document.querySelector('.game-info').innerText = 'Missing some keys!'
+      }
+    } else {
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 0
+      player.boardLocation[0] = player.boardLocation[0] + updown
+      player.boardLocation[1] = player.boardLocation[1] + leftright
+      checkLocation()
+      // register the move on the board
+      game.boardArray[player.boardLocation[0]][player.boardLocation[1]] = 2
+      displayBoard()
+    }
+  }
+}
+```
+
+## Future Enhancements
+
+- Adding a timer
+- improving overall display/graphics
+- Generating maze arrays using AI

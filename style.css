@@ -1,15 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Wendy+One&display=swap');
 body {
   margin: 0;
   display: grid;
-  grid-template-rows: 90px 1fr;
-  grid-template-columns: 2fr 600px 3fr;
+  grid-template-rows: 70px 1fr;
+  grid-template-columns: 2fr 600px 2fr;
   grid-template-areas:
     'header header header '
     'leftsidepanel gameContainerDiv rightsidepanel';
   height: 100vh;
+  font-family: 'Abel', sans-serif;
+  font-size: 18px;
+}
+
+#daydream-mode-body {
+  color: white;
+  background-color: #53bdcb;
+}
+#nightmare-mode-body {
+  color: white;
+  background-color: #062747;
 }
 .game-header {
-  background-color: pink;
+  font-family: 'Wendy One', sans-serif;
+  font-size: 20px;
+  color: white;
   grid-area: header;
   text-align: center;
 }
@@ -17,16 +31,25 @@ body {
   text-align: center;
 }
 #left-side-panel {
-  background-color: lightsalmon;
   grid-area: leftsidepanel;
 }
 #right-side-panel {
-  background-color: orange;
   grid-area: rightsidepanel;
 }
 #game-container-div {
-  background-color: #a3f7c9;
   grid-area: gameContainerDiv;
+}
+.game-full-display-div {
+  background-color: #9ae5ee;
+  margin-top: 10px;
+}
+#nightmare-game-full-display-div {
+  background-color: #0b3967;
+  color: white;
+}
+#daydream-game-full-display-div {
+  background-color: #9ae5ee;
+  color: white;
 }
 #game-board-div {
   width: 100%;
@@ -36,61 +59,177 @@ body {
   grid-template-columns: repeat(11, 1fr);
 }
 .board-element {
-  /* border: 1px solid navy; */
-  /* width: 28px;
-  height: 28px; */
   margin: 0;
 }
 .board-wall-light {
-  background-color: #34a44f;
-  outline: 1px dashed #226932;
-  outline-offset: -1px;
-  border-radius: 20%;
+  outline: 2px dashed #fa8628;
+  outline-offset: -2px;
+  border-radius: 40%;
+  background-color: #ffa255;
 }
 .board-floor-light {
-  background-color: #a3f7c9;
-  outline: 1px dashed #f7eca3;
-  outline-offset: -1px;
+  background-color: #9ae5ee;
 }
 .board-player {
-  background-color: #ff5733;
+  background-image: url('./projectImages/Untitled_Artwork\ 16.png');
+  background-size: cover;
 }
 .board-exit-light {
-  background-color: #525953;
+  background-image: url('./projectImages/Untitled_Artwork\ 11.png');
+  background-size: cover;
+}
+.board-exit-dark {
+  background-image: url('./projectImages/Untitled_Artwork\ 17.png');
+  background-size: cover;
+}
+.board-trap-dark {
+  background-color: #0b3967;
+  border-radius: 100%;
+  outline: 1px solid #124a81;
+  outline-offset: -2px;
+  border-radius: 100%;
 }
 .board-trap-light {
-  background-color: #78634f;
+  background-color: #9ae5ee;
+  border-radius: 100%;
+  outline: 1px solid #cdf3f8;
+  outline-offset: -2px;
+  border-radius: 100%;
 }
 .board-score-light {
-  background-color: #fff000;
+  background-image: url('./projectImages/Untitled_Artwork\ 8.png');
+  background-size: cover;
+  border-radius: 40%;
 }
 .board-key-light {
-  background-color: #ab1d8a;
+  background-image: url('./projectImages/Untitled_Artwork\ 9.png');
+  background-size: cover;
+  border-radius: 40%;
 }
 .board-switch-light {
-  background-color: #110841;
+  background-image: url('./projectImages/Untitled_Artwork\ 14.png');
+  background-size: cover;
 }
 .board-trapdoor-light {
-  background-color: rgb(144, 135, 131);
+  background-image: url('./projectImages/Untitled_Artwork\ 12.png');
+  background-size: cover;
+}
+.board-trapdoor-dark {
+  background-image: url('./projectImages/Untitled_Artwork\ 13.png 13.png');
+  background-size: cover;
 }
 .board-show-dark {
 }
 .board-other-dark {
-  background-color: #313131;
+  background-color: #072747;
+  border-radius: 40%;
 }
 .game-variables-div {
   display: flex;
   align-content: center;
   justify-content: space-around;
+  color: #26a2b3;
   padding: 5px 0;
+}
+#nightmare-variables-div {
+  color: white;
 }
 ul {
   list-style-type: none;
   text-align: left;
 }
-ol {
-  text-align: left;
-}
 li {
   padding: 5px 0px;
+}
+.information-headers {
+  padding: 10px;
+  border-radius: 2%;
+}
+.nightmare-information-headers {
+  background-color: #b186c7;
+  border: 1px solid #7d36a0;
+}
+.daydream-information-headers {
+  background-color: #f76574;
+  border: 1px solid #f74759;
+}
+.modebutton {
+  font-family: 'Abel', sans-serif;
+  border-radius: 3px;
+  font-size: 18px;
+  padding: 10px;
+}
+#nightmareMode {
+  background-color: #b186c7;
+  border: 1px solid #7d36a0;
+  color: #652186;
+}
+#daydreamMode {
+  background-color: #f76574;
+  border: 1px solid #f74759;
+  color: #ffffff;
+}
+.game-next-level-div,
+.end-game-div {
+  text-align: center;
+
+  outline-offset: -2px;
+  margin: 15px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+#next-level-header {
+  font-size: 30px;
+}
+#daydream-next-level-div,
+#daydream-end-game-div {
+  background-color: #9ae5ee;
+  outline: 2px solid #dbfbff;
+  color: #f76574;
+}
+#nightmare-next-level-div,
+#nightmare-end-game-div {
+  background-color: #0f3e6d;
+  outline: 2px solid #dbfbff;
+  color: #ffffff;
+}
+button {
+  font-family: 'Abel', sans-serif;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 5px;
+  margin: 10px;
+}
+
+#daydream-restart,
+#daydream-next-level-button,
+#daydream-restart-end {
+  background-color: #f76574;
+  border: 1px solid #f74759;
+  color: #ffffff;
+}
+
+#daydream-restart:hover,
+#daydream-next-level-button:hover,
+#daydream-restart-end:hover {
+  background-color: #fac8cd;
+  border: 1px solid #fac8cd;
+  color: #f74759;
+}
+
+#nightmare-restart,
+#nightmare-next-level-button,
+#nightmare-restart-end {
+  background-color: #b186c7;
+  border: 1px solid #7d36a0;
+  color: #652186;
+}
+
+#nightmare-restart:hover,
+#nightmare-next-level-button:hover,
+#nightmare-restart-end:hover {
+  background-color: #eed2fc;
+  border: 1px solid #eed2fc;
+  color: #652186;
 }

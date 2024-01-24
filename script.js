@@ -163,6 +163,8 @@ const displayBoard = () => {
         boardElement.classList.add('board-floor-light')
       } else if (game.boardArray[i][j] === 1) {
         boardElement.classList.add('board-wall-light')
+        boardElement.style.backgroundColor = '#ffa255'
+        boardElement.style.outline = '2px dashed #fa8628'
       } else if (game.boardArray[i][j] === 3) {
         boardElement.classList.add('board-exit-light')
       } else if (game.boardArray[i][j] === 4) {
@@ -191,7 +193,8 @@ const startLevel = (board) => {
   player.score = 0
   // The div containing all of the game - board and player information
   let fullGameDisplay = document.createElement('div')
-  fullGameDisplay.setAttribute('id', 'game-full-display-div')
+  fullGameDisplay.classList.add('game-full-display-div')
+  fullGameDisplay.setAttribute('id', 'daydream-full-display-div')
   fullGameDisplay.innerHTML = ''
 
   // The div containing all of the player information
@@ -209,21 +212,21 @@ const startLevel = (board) => {
 
   //Lives Left
   let gameVariablesHeartsSpan = document.createElement('span')
-  gameVariablesHeartsSpan.innerText = 'Hearts: '
+  gameVariablesHeartsSpan.innerHTML = `<img src='projectImages/Untitled_Artwork 15.png' width='22px'> `
   let gameVariablesHeartsSpanInfo = document.createElement('span')
   gameVariablesHeartsSpan.appendChild(gameVariablesHeartsSpanInfo)
   gameVariablesHeartsSpanInfo.setAttribute('id', 'currentLivesLeft')
 
   //Keys collected
   let gameVariablesKeySpan = document.createElement('span')
-  gameVariablesKeySpan.innerText = 'Keys: '
+  gameVariablesKeySpan.innerHTML = `<img src='projectImages/Untitled_Artwork 9.png' width='22px'> `
   let gameVariablesKeySpanInfo = document.createElement('span')
   gameVariablesKeySpan.appendChild(gameVariablesKeySpanInfo)
   gameVariablesKeySpanInfo.setAttribute('id', 'currentKeys')
 
   // Points Collected
   let gameVariablesPointsSpan = document.createElement('span')
-  gameVariablesPointsSpan.innerText = 'Points:'
+  gameVariablesPointsSpan.innerHTML = `<img src='projectImages/Untitled_Artwork 8.png' width='22px'> `
   let gameVariablespointsSpanInfo = document.createElement('span')
   gameVariablesPointsSpan.appendChild(gameVariablespointsSpanInfo)
   gameVariablespointsSpanInfo.setAttribute('id', 'currentPoints')
@@ -239,9 +242,9 @@ const startLevel = (board) => {
 
   document.querySelector('#game-container-div').appendChild(fullGameDisplay)
   document
-    .querySelector('#game-full-display-div')
+    .querySelector('.game-full-display-div')
     .appendChild(displayGameVariables)
-  document.querySelector('#game-full-display-div').appendChild(displayGameBoard)
+  document.querySelector('.game-full-display-div').appendChild(displayGameBoard)
   gameLevel = document.querySelector('#currentlevel')
   gameLevel.innerText = game.level
   hearts = document.querySelector('#currentLivesLeft')
@@ -259,7 +262,8 @@ const displayNextLevelMenu = (currentLevel) => {
   document.querySelector('.game-info').innerText = ''
 
   let nextLevelMenu = document.createElement('div')
-  nextLevelMenu.setAttribute('id', 'game-next-level-div')
+  nextLevelMenu.classList.add('game-next-level-div')
+  nextLevelMenu.setAttribute('id', 'daydream-next-level-div')
 
   let nextLevelHeader = document.createElement('h3')
   nextLevelHeader.setAttribute('id', 'next-level-header')
@@ -282,11 +286,11 @@ const displayNextLevelMenu = (currentLevel) => {
   nextLevelStatsLivesLeft.innerText = `Lives left: ${player.lives}`
 
   let restartLevelButton = document.createElement('button')
-  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.setAttribute('id', 'daydream-restart')
   restartLevelButton.innerText = 'Restart Level'
 
   let nextLevelButton = document.createElement('button')
-  nextLevelButton.setAttribute('id', 'next-level-button')
+  nextLevelButton.setAttribute('id', 'daydream-next-level-button')
   nextLevelButton.innerText = 'Next Level'
 
   nextLevelMenu.appendChild(nextLevelHeader)
@@ -314,10 +318,11 @@ const displayEndGameMenu = () => {
   document.querySelector('.game-info').innerText = ''
 
   let endGameMenu = document.createElement('div')
-  endGameMenu.setAttribute('id', 'end-game-div')
+  endGameMenu.setAttribute('id', 'daydream-end-game-div')
+  endGameMenu.classList.add('end-game-div')
   let endGameMenuHeader = document.createElement('h3')
   endGameMenuHeader.setAttribute('id', 'end-game-header')
-  endGameMenuHeader.innerText = 'You escaped!'
+  endGameMenuHeader.innerText = 'Time for deeper waters!'
 
   let endGameStatsKeys = document.createElement('h4')
   endGameStatsKeys.setAttribute('id', 'end-game-stats-keys')
@@ -332,7 +337,7 @@ const displayEndGameMenu = () => {
   endGameStatsDeaths.innerText = `Deaths: ${game.accumDeaths}`
 
   let restartLevelButton = document.createElement('button')
-  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.setAttribute('id', 'daydream-restart-end')
   restartLevelButton.innerText = 'Restart Level'
   restartLevelButton.addEventListener('click', () => {
     startLevel(game.gameBoards[game.level - 1].board)

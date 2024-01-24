@@ -16,7 +16,6 @@ let gameLevel
 let hearts
 let playerScore
 let playerKeys
-let movementPermission
 
 import { Game } from './dataStore.js'
 
@@ -122,7 +121,9 @@ document.addEventListener('keydown', function (e) {
 const displayBoardShowAll = () => {
   let gameBoard = document.querySelector('#game-board-div')
   gameBoard.innerHTML = ''
-  document.querySelector('.game-info').innerText = 'Lights on!'
+  document.querySelector(
+    '#currentLight'
+  ).innerHTML = `<img src='projectImages/Untitled_Artwork 19.png' width='22px'> `
 
   let size
   switch (game.boardArray.length) {
@@ -163,12 +164,15 @@ const displayBoardShowAll = () => {
         boardElement.classList.add('board-player')
       } else if (game.boardArray[i][j] === 0) {
         boardElement.classList.add('board-floor-light')
+        boardElement.style.backgroundColor = '#0b3967'
       } else if (game.boardArray[i][j] === 1) {
         boardElement.classList.add('board-wall-light')
+        boardElement.style.backgroundColor = '#ff6596'
+        boardElement.style.outline = '2px dashed #ff3891'
       } else if (game.boardArray[i][j] === 3) {
-        boardElement.classList.add('board-exit-light')
+        boardElement.classList.add('board-exit-dark')
       } else if (game.boardArray[i][j] === 4) {
-        boardElement.classList.add('board-trap-light')
+        boardElement.classList.add('board-trap-dark')
       } else if (game.boardArray[i][j] === 5) {
         boardElement.classList.add('board-score-light')
       } else if (game.boardArray[i][j] === 6) {
@@ -176,7 +180,7 @@ const displayBoardShowAll = () => {
       } else if (game.boardArray[i][j] === 7) {
         boardElement.classList.add('board-switch-light')
       } else if (game.boardArray[i][j] === 8) {
-        boardElement.classList.add('board-trapdoor-light')
+        boardElement.classList.add('board-trapdoor-dark')
       }
       gameBoard.appendChild(boardElement)
     }
@@ -186,7 +190,9 @@ const displayBoardShowAll = () => {
 const displayBoard = () => {
   let gameBoard = document.querySelector('#game-board-div')
   gameBoard.innerHTML = ''
-  document.querySelector('.game-info').innerText = 'Lights off!'
+  document.querySelector(
+    '#currentLight'
+  ).innerHTML = `<img src='projectImages/Untitled_Artwork 18.png' width='22px'> `
 
   let size
   switch (game.boardArray.length) {
@@ -235,12 +241,15 @@ const displayBoard = () => {
           boardElement.classList.add('board-player')
         } else if (game.boardArray[i][j] === 0) {
           boardElement.classList.add('board-floor-light')
+          boardElement.style.backgroundColor = '#0b3967'
         } else if (game.boardArray[i][j] === 1) {
           boardElement.classList.add('board-wall-light')
+          boardElement.style.backgroundColor = '#ff6596'
+          boardElement.style.outline = '2px dashed #ff3891'
         } else if (game.boardArray[i][j] === 3) {
-          boardElement.classList.add('board-exit-light')
+          boardElement.classList.add('board-exit-dark')
         } else if (game.boardArray[i][j] === 4) {
-          boardElement.classList.add('board-trap-light')
+          boardElement.classList.add('board-trap-dark')
         } else if (game.boardArray[i][j] === 5) {
           boardElement.classList.add('board-score-light')
         } else if (game.boardArray[i][j] === 6) {
@@ -248,7 +257,7 @@ const displayBoard = () => {
         } else if (game.boardArray[i][j] === 7) {
           boardElement.classList.add('board-switch-light')
         } else if (game.boardArray[i][j] === 8) {
-          boardElement.classList.add('board-trapdoor-light')
+          boardElement.classList.add('board-trapdoor-dark')
         }
       } else {
         boardElement.classList.add('board-other-dark')
@@ -270,13 +279,14 @@ const startLevel = (board) => {
 
   // The div containing all of the game - board and player information
   let fullGameDisplay = document.createElement('div')
-  fullGameDisplay.setAttribute('id', 'game-full-display-div')
+  fullGameDisplay.classList.add('game-full-display-div')
+  fullGameDisplay.setAttribute('id', 'nightmare-game-full-display-div')
   fullGameDisplay.innerHTML = ''
 
   // The div containing all of the player information
   let displayGameVariables = document.createElement('div')
   displayGameVariables.classList.add('game-variables-div')
-
+  displayGameVariables.setAttribute('id', 'nightmare-variables-div')
   // The elements containing the player information
 
   //Current Level
@@ -288,29 +298,34 @@ const startLevel = (board) => {
 
   //Lives Left
   let gameVariablesHeartsSpan = document.createElement('span')
-  gameVariablesHeartsSpan.innerText = 'Hearts: '
+  gameVariablesHeartsSpan.innerHTML = `<img src='projectImages/Untitled_Artwork 15.png' width='22px'> `
   let gameVariablesHeartsSpanInfo = document.createElement('span')
   gameVariablesHeartsSpan.appendChild(gameVariablesHeartsSpanInfo)
   gameVariablesHeartsSpanInfo.setAttribute('id', 'currentLivesLeft')
 
   //Keys collected
   let gameVariablesKeySpan = document.createElement('span')
-  gameVariablesKeySpan.innerText = 'Keys: '
+  gameVariablesKeySpan.innerHTML = `<img src='projectImages/Untitled_Artwork 9.png' width='22px'> `
   let gameVariablesKeySpanInfo = document.createElement('span')
   gameVariablesKeySpan.appendChild(gameVariablesKeySpanInfo)
   gameVariablesKeySpanInfo.setAttribute('id', 'currentKeys')
 
   // Points Collected
   let gameVariablesPointsSpan = document.createElement('span')
-  gameVariablesPointsSpan.innerText = 'Points:'
+  gameVariablesPointsSpan.innerHTML = `<img src='projectImages/Untitled_Artwork 8.png' width='22px'> `
   let gameVariablespointsSpanInfo = document.createElement('span')
   gameVariablesPointsSpan.appendChild(gameVariablespointsSpanInfo)
   gameVariablespointsSpanInfo.setAttribute('id', 'currentPoints')
+
+  let gameVariablesLightsSpan = document.createElement('span')
+  gameVariablesLightsSpan.innerHTML = `<img src='projectImages/Untitled_Artwork 18.png' width='22px'> `
+  gameVariablesLightsSpan.setAttribute('id', 'currentLight')
 
   displayGameVariables.appendChild(gameVariablesLevelSpan)
   displayGameVariables.appendChild(gameVariablesHeartsSpan)
   displayGameVariables.appendChild(gameVariablesKeySpan)
   displayGameVariables.appendChild(gameVariablesPointsSpan)
+  displayGameVariables.appendChild(gameVariablesLightsSpan)
 
   // The div containing the board of the game
   let displayGameBoard = document.createElement('div')
@@ -318,9 +333,9 @@ const startLevel = (board) => {
 
   document.querySelector('#game-container-div').appendChild(fullGameDisplay)
   document
-    .querySelector('#game-full-display-div')
+    .querySelector('.game-full-display-div')
     .appendChild(displayGameVariables)
-  document.querySelector('#game-full-display-div').appendChild(displayGameBoard)
+  document.querySelector('.game-full-display-div').appendChild(displayGameBoard)
   gameLevel = document.querySelector('#currentlevel')
   gameLevel.innerText = game.level
   hearts = document.querySelector('#currentLivesLeft')
@@ -338,7 +353,8 @@ const displayNextLevelMenu = (currentLevel) => {
   document.querySelector('.game-info').innerText = ''
 
   let nextLevelMenu = document.createElement('div')
-  nextLevelMenu.setAttribute('id', 'game-next-level-div')
+  nextLevelMenu.classList.add('game-next-level-div')
+  nextLevelMenu.setAttribute('id', 'nightmare-next-level-div')
 
   let nextLevelHeader = document.createElement('h3')
   nextLevelHeader.setAttribute('id', 'next-level-header')
@@ -361,11 +377,11 @@ const displayNextLevelMenu = (currentLevel) => {
   nextLevelStatsLivesLeft.innerText = `Lives left: ${player.lives}`
 
   let restartLevelButton = document.createElement('button')
-  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.setAttribute('id', 'nightmare-restart')
   restartLevelButton.innerText = 'Restart Level'
 
   let nextLevelButton = document.createElement('button')
-  nextLevelButton.setAttribute('id', 'next-level-button')
+  nextLevelButton.setAttribute('id', 'nightmare-next-level-button')
   nextLevelButton.innerText = 'Next Level'
 
   nextLevelMenu.appendChild(nextLevelHeader)
@@ -392,10 +408,11 @@ const displayEndGameMenu = () => {
   document.querySelector('.game-info').innerText = ''
 
   let endGameMenu = document.createElement('div')
-  endGameMenu.setAttribute('id', 'end-game-div')
+  endGameMenu.setAttribute('id', 'nightmare-end-game-div')
+  endGameMenu.classList.add('end-game-div')
   let endGameMenuHeader = document.createElement('h3')
   endGameMenuHeader.setAttribute('id', 'end-game-header')
-  endGameMenuHeader.innerText = 'You escaped!'
+  endGameMenuHeader.innerText = 'Game Complete!'
 
   let endGameStatsKeys = document.createElement('h4')
   endGameStatsKeys.setAttribute('id', 'end-game-stats-keys')
@@ -410,7 +427,7 @@ const displayEndGameMenu = () => {
   endGameStatsDeaths.innerText = `Deaths: ${game.accumDeaths}`
 
   let restartLevelButton = document.createElement('button')
-  restartLevelButton.setAttribute('id', 'restart')
+  restartLevelButton.setAttribute('id', 'nightmare-restart-end')
   restartLevelButton.innerText = 'Restart Level'
   restartLevelButton.addEventListener('click', () => {
     startLevel(game.gameBoards[game.level - 1].board)

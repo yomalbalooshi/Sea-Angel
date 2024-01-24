@@ -7,16 +7,16 @@
   <script defer src="scriptNightmare.js" type="module" charset="utf-8"></script>
   <title>Sea Angel: Deeper Waters</title>
 </head>
-<body>
+<body id="nightmare-mode-body">
   <header class="game-header"><h1>Sea Angel: Deeper Waters</h1></header>
   <aside class="side-panel" id="left-side-panel">
-    <h2>Game Information</h2>
+    <h2 class="information-headers nightmare-information-headers">Game Information</h2>
     <p class="game-info"></p>
   </aside>
   <div id="game-container-div"></div>
   
     <aside class="side-panel" id="right-side-panel">
-      <h2>Control</h2>
+      <h2 class=" information-headers nightmare-information-headers">Control</h2>
       <ul class="key-instructions">
         <li class="key-instructions-item">W - Move Up</li>
         <li class="key-instructions-item">S- Move Down</li>
@@ -24,14 +24,14 @@
         <li class="key-instructions-item">D - Move Right</li>
         <li class="key-instructions-item">Space - Use Switch</li>
       </ul>
-      <h2>Instructions</h2>
-      <ol class="general-instructions">
+      <h2 class=" information-headers nightmare-information-headers">Instructions</h2>
+      <ul class="general-instructions">
         <li class="general-instructions-item">Navigate the dark waters</li>
         <li class="general-instructions-item">Wait for the map to light up!</li>
         <li class="general-instructions-item">Collect Keys to exit</li>
         <li class="general-instructions-item">Use switches to open trap doors</li>
         <li class="general-instructions-item">Avoid traps</li>
-      </ol>
+      </ul>
       <button class="modebutton" id="daydreamMode">Shallows</button>
       </aside>
 </body>
