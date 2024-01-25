@@ -89,6 +89,10 @@ body {
   outline-offset: -2px;
   border-radius: 100%;
 }
+.board-trapdoor-dark {
+  background-image: url('./projectImages/Untitled_Artwork\ 13.png');
+  background-size: cover;
+}
 .board-trap-light {
   background-color: #9ae5ee;
   border-radius: 100%;
