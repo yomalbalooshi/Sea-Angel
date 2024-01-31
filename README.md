@@ -1,4 +1,4 @@
-# The Maze Game
+# Sea Angel
 
 ## Date: 24/01/24
 
