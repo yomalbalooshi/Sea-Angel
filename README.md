@@ -47,31 +47,35 @@
 
 #### Shallows: Level 1
 
-![Image](https://i.pinimg.com/736x/59/c0/92/59c0929e572471ca3bf3adfad306d0d2.jpg)
+![Image](./level1ss.png)
 
 #### Shallows: Level 1 Completion
 
-![Image](https://i.pinimg.com/736x/7f/71/f3/7f71f3db67f166730ad963e795b328e2.jpg)
+![Image](./level1compss.png)
 
 #### Shallows: Level 2
 
-![Image](https://i.pinimg.com/736x/52/f1/82/52f182ad818eb4fb241b5f06a9113c83.jpg)
+![Image](./level2ss.png)
 
 #### Shallows: Level 3
 
-![Image](https://i.pinimg.com/736x/c7/05/06/c705063660c6cf9650eae004ce7759cf.jpg)
+![Image](./level3ss.png)
 
 #### Deeper Waters: level 2 lights on
 
-![Image](https://i.pinimg.com/736x/e9/ef/2d/e9ef2dde760931397b8d90a935c92c9c.jpg)
+![Image](./level2deeponss.png)
 
 #### Deeper Waters: level 2 lights off
 
-![Image](https://i.pinimg.com/736x/67/72/20/677220aa82de6d6f6d45b60671df358a.jpg)
+![Image](./level2deepoffss.png)
 
 #### Deeper Waters: level 4 lights on
 
-![Image](https://i.pinimg.com/736x/be/b3/6a/beb36a4637ffd49b76e450af6c5d29a5.jpg)
+![Image](./level4deeponss.png)
+
+#### Deeper Waters: level 4 lights off
+
+![Image](./level4deepoffss.png)
 
 ---
 
